@@ -1,11 +1,15 @@
 # Ignore everything by default
 /*
 
-# Allow app/code only
+# Allow app/code directory
 !/app/code/
 !/app/code/**
 
-# Ignore everything else in app/
+# Ignore everything else in app
+/app/*
+!/app/code/
+
+# Ignore app/etc, app/design, app/i18n explicitly
 app/etc/
 app/design/
 app/i18n/
