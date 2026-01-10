@@ -1,12 +1,16 @@
 # Ignore everything by default
 /*
 
-# Allow app code
-!/app/
-!/app/**
+# Allow app/code only
+!/app/code/
+!/app/code/**
 
-# Allow pub root and required files
-!/pub/
+# Ignore everything else in app/
+app/etc/
+app/design/
+app/i18n/
+
+# Allow pub root files needed
 !/pub/index.php
 !/pub/.htaccess
 
@@ -25,7 +29,7 @@
 
 # Explicit ignores (safety)
 .env
-app/etc/env.php
+auth.json
 vendor/
 generated/
 var/
