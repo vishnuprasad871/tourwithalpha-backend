@@ -1,0 +1,42 @@
+# Ignore everything by default
+/*
+
+# Allow app code
+!/app/
+!/app/**
+
+# Allow pub root and required files
+!/pub/
+!/pub/index.php
+!/pub/.htaccess
+
+# Ignore pub generated/media
+/pub/static/*
+/pub/media/*
+!/pub/static/.htaccess
+!/pub/media/.htaccess
+
+# Allow composer files
+!/composer.json
+!/composer.lock
+
+# Git files
+!/.gitignore
+
+# Explicit ignores (safety)
+.env
+app/etc/env.php
+vendor/
+generated/
+var/
+setup/
+dev/
+lib/
+bin/
+phpserver/
+
+# OS / IDE
+.idea
+.vscode
+.DS_Store
+*.log
