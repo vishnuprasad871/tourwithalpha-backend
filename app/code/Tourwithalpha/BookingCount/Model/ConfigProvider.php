@@ -91,10 +91,9 @@ class ConfigProvider
                 continue;
             }
 
-            if (isset($limit['sku']) && isset($limit['date']) && isset($limit['allowed_qty'])) {
+            if (isset($limit['sku']) && isset($limit['allowed_qty'])) {
                 $normalized[] = [
                     'sku' => trim((string) $limit['sku']),
-                    'date' => trim((string) $limit['date']),
                     'allowed_qty' => (int) $limit['allowed_qty']
                 ];
             }
@@ -104,19 +103,18 @@ class ConfigProvider
     }
 
     /**
-     * Get allowed quantity for a specific SKU and date
+     * Get allowed quantity for a specific SKU (applies to all dates)
      *
      * @param string $sku
-     * @param string $date Date in Y-m-d format
      * @param int|null $storeId
      * @return int|null Returns null if no limit is set
      */
-    public function getAllowedQtyForSkuDate(string $sku, string $date, ?int $storeId = null): ?int
+    public function getAllowedQtyForSku(string $sku, ?int $storeId = null): ?int
     {
         $limits = $this->getSkuLimits($storeId);
 
         foreach ($limits as $limit) {
-            if ($limit['sku'] === $sku && $limit['date'] === $date) {
+            if ($limit['sku'] === $sku) {
                 return $limit['allowed_qty'];
             }
         }
@@ -125,23 +123,21 @@ class ConfigProvider
     }
 
     /**
-     * Check if booking is available for a specific SKU, date, and quantity
+     * Check if booking is available for a specific SKU and quantity
      *
      * @param string $sku
-     * @param string $date Date in Y-m-d format
-     * @param int $currentBooked Current booked quantity
+     * @param int $currentBooked Current booked quantity for the date
      * @param int $requestedQty Quantity being requested
      * @param int|null $storeId
      * @return bool
      */
     public function isBookingAvailable(
         string $sku,
-        string $date,
         int $currentBooked,
         int $requestedQty,
         ?int $storeId = null
     ): bool {
-        $allowedQty = $this->getAllowedQtyForSkuDate($sku, $date, $storeId);
+        $allowedQty = $this->getAllowedQtyForSku($sku, $storeId);
 
         // If no limit is set, allow unlimited bookings
         if ($allowedQty === null) {

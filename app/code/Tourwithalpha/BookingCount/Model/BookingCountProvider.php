@@ -113,11 +113,10 @@ class BookingCountProvider
         // Sort by date ascending
         ksort($bookingsByDate);
 
-        // Add allowed_qty and remaining_qty from config
-        $skuLimits = $this->configProvider->getSkuLimits();
+        // Get allowed_qty from config (same for all dates)
+        $allowedQty = $this->configProvider->getAllowedQtyForSku($sku);
 
         foreach ($bookingsByDate as $date => &$booking) {
-            $allowedQty = $this->getAllowedQtyForSkuDate($skuLimits, $sku, $date);
             $booking['allowed_qty'] = $allowedQty;
             $booking['remaining_qty'] = $allowedQty !== null
                 ? max(0, $allowedQty - $booking['qty_total'])
@@ -175,24 +174,5 @@ class BookingCountProvider
 
         return null;
     }
-
-    /**
-     * Get allowed quantity for a specific SKU and date from config
-     *
-     * @param array $skuLimits
-     * @param string $sku
-     * @param string $date
-     * @return int|null
-     */
-    private function getAllowedQtyForSkuDate(array $skuLimits, string $sku, string $date): ?int
-    {
-        foreach ($skuLimits as $limit) {
-            if (isset($limit['sku']) && isset($limit['date']) && isset($limit['allowed_qty'])) {
-                if ($limit['sku'] === $sku && $limit['date'] === $date) {
-                    return (int) $limit['allowed_qty'];
-                }
-            }
-        }
-        return null;
-    }
 }
+

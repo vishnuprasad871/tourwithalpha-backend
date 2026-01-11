@@ -26,24 +26,17 @@ class SkuLimits extends AbstractFieldArray
         $this->addColumn('sku', [
             'label' => __('SKU'),
             'class' => 'required-entry',
-            'style' => 'width:150px'
-        ]);
-
-        $this->addColumn('date', [
-            'label' => __('Date'),
-            'class' => 'required-entry validate-date',
-            'style' => 'width:120px',
-            'type' => 'date'
+            'style' => 'width:200px'
         ]);
 
         $this->addColumn('allowed_qty', [
-            'label' => __('Allowed Qty'),
+            'label' => __('Allowed Qty Per Day'),
             'class' => 'required-entry validate-number validate-greater-than-zero',
-            'style' => 'width:80px'
+            'style' => 'width:120px'
         ]);
 
         $this->_addAfter = false;
-        $this->_addButtonLabel = __('Add Limit');
+        $this->_addButtonLabel = __('Add SKU Limit');
     }
 
     /**
