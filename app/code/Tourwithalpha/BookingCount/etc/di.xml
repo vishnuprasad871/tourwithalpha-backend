@@ -8,12 +8,7 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
     
-    <!-- Preference for BookingCountProvider -->
-    <preference for="Tourwithalpha\BookingCount\Model\BookingCountProvider"
-                type="Tourwithalpha\BookingCount\Model\BookingCountProvider"/>
-    
-    <!-- Preference for ConfigProvider -->
-    <preference for="Tourwithalpha\BookingCount\Model\ConfigProvider"
-                type="Tourwithalpha\BookingCount\Model\ConfigProvider"/>
+    <!-- No preferences needed - concrete classes are used directly -->
     
 </config>
+
