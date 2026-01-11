@@ -1,0 +1,23 @@
+# GraphQL Schema for Booking Count API
+
+type Query {
+    bookingCountBySku(
+        sku: String! @doc(description: "Product SKU to get booking counts for")
+    ): BookingCountOutput @resolver(class: "Tourwithalpha\\BookingCount\\Model\\Resolver\\BookingCount") @doc(description: "Get booking count per date for a specific SKU")
+}
+
+type BookingCountOutput @doc(description: "Output containing booking counts by date") {
+    sku: String @doc(description: "The product SKU")
+    bookings: [BookingDateCount] @doc(description: "List of booking counts by date")
+    total_bookings: Int @doc(description: "Total number of bookings across all dates")
+    success: Boolean @doc(description: "Whether the operation was successful")
+    message: String @doc(description: "Response message")
+}
+
+type BookingDateCount @doc(description: "Booking count for a specific date") {
+    date: String @doc(description: "Booking date in YYYY-MM-DD format")
+    count: Int @doc(description: "Number of order items for this date")
+    qty_total: Int @doc(description: "Total quantity booked for this date")
+    allowed_qty: Int @doc(description: "Maximum allowed quantity for this date from admin config")
+    remaining_qty: Int @doc(description: "Remaining available quantity for this date")
+}

@@ -1,50 +1,46 @@
 # Ignore everything by default
 /*
 
-# Allow app/code directory
+# Allow app/code
+!/app/
 !/app/code/
 !/app/code/**
 
-# Ignore everything else in app
-/app/*
-!/app/code/
+# Ignore other app folders
+/app/design/
+/app/etc/
+/app/i18n/
 
-# Ignore app/etc, app/design, app/i18n explicitly
-app/etc/
-app/design/
-app/i18n/
-
-# Allow pub root files needed
+# Allow pub entry files
+!/pub/
 !/pub/index.php
 !/pub/.htaccess
 
-# Ignore pub generated/media
+# Ignore generated pub content
 /pub/static/*
 /pub/media/*
 !/pub/static/.htaccess
 !/pub/media/.htaccess
 
-# Allow composer files
+# Composer
 !/composer.json
 !/composer.lock
 
-# Git files
-!/.gitignore
+# Magento generated
+/vendor/
+/generated/
+/var/
+/setup/
+/dev/
+/lib/
+/bin/
 
-# Explicit ignores (safety)
+# Secrets
 .env
 auth.json
-vendor/
-generated/
-var/
-setup/
-dev/
-lib/
-bin/
-phpserver/
 
-# OS / IDE
-.idea
-.vscode
+# IDE / OS
+.idea/
+.vscode/
 .DS_Store
 *.log

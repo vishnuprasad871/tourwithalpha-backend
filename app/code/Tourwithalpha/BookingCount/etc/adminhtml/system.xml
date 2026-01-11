@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Tourwithalpha BookingCount Module
+ * Admin system configuration
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="tourwithalpha" translate="label" sortOrder="999">
+            <label>Tourwithalpha</label>
+        </tab>
+        <section id="tourwithalpha_booking" translate="label" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Booking Limits</label>
+            <tab>tourwithalpha</tab>
+            <resource>Tourwithalpha_BookingCount::config</resource>
+            <group id="limits" translate="label" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>SKU Booking Limits</label>
+                <comment>Configure maximum allowed bookings per SKU and date</comment>
+                <field id="sku_limits" translate="label comment" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>SKU Limits</label>
+                    <comment>Add SKU, Date, and Allowed Quantity for each booking limit</comment>
+                    <frontend_model>Tourwithalpha\BookingCount\Block\Adminhtml\Form\Field\SkuLimits</frontend_model>
+                    <backend_model>Magento\Config\Model\Config\Backend\Serialized\ArraySerialized</backend_model>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>
