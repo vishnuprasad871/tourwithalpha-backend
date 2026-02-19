@@ -81,14 +81,12 @@ class CreatePaymentLink
 
         try {
             $secretKey = $this->configDataProvider->getSecretKey();
-            $baseUrl = $this->_storeManager->getStore()->getBaseUrl();
-            $successUrl = $this->configDataProvider->getSuccessUrl();
-            $cancelUrl = $this->configDataProvider->getCancelUrl();
 
-            // Build success callback URL with order increment_id
-            $returnUrl = $successUrl
-                ? rtrim($successUrl, '/') . '?masked_number=' . $order->getIncrementId() . '&store_code=' . $order->getStore()->getCode()
-                : $baseUrl . 'stripe/index/status?masked_number=' . $order->getIncrementId() . '&store_code=' . $order->getStore()->getCode();
+            // Build success callback URL programmatically — no config needed
+            $returnUrl = $this->_urlBuilder->getUrl('stripe/index/status', [
+                'masked_number' => $order->getIncrementId(),
+                'store_code' => $order->getStore()->getCode(),
+            ]);
 
             $amountCents = (int) round($order->getGrandTotal() * 100);
             $currency = strtolower($order->getOrderCurrencyCode() ?: 'usd');

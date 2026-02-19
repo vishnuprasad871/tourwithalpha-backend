@@ -21,14 +21,7 @@
                 <comment>Signing secret from your Stripe Webhook endpoint (whsec_...)</comment>
                 <backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>
             </field>
-            <field id="success_url" translate="label" type="text" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
-                <label>Success Redirect URL</label>
-                <comment>Frontend URL after successful payment (e.g. https://yoursite.com/order-success)</comment>
-            </field>
-            <field id="cancel_url" translate="label" type="text" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1">
-                <label>Cancel Redirect URL</label>
-                <comment>Frontend URL when payment is cancelled (e.g. https://yoursite.com/cart)</comment>
-            </field>
+
         </group>
     </section>
   </system>

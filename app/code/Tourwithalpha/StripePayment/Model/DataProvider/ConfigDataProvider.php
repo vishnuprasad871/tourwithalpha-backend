@@ -19,8 +19,6 @@ class ConfigDataProvider extends AbstractModel
     const STRIPE_STATUS = 'payment/stripe/active';
     const STRIPE_SECRET_KEY = 'payment/stripe/secret_key';
     const STRIPE_WEBHOOK_SECRET = 'payment/stripe/webhook_secret';
-    const STRIPE_SUCCESS_URL = 'payment/stripe/success_url';
-    const STRIPE_CANCEL_URL = 'payment/stripe/cancel_url';
     const STRIPE_TITLE = 'payment/stripe/title';
 
     protected $scopeConfig;
@@ -60,22 +58,6 @@ class ConfigDataProvider extends AbstractModel
     {
         return $this->scopeConfig->getValue(
             self::STRIPE_WEBHOOK_SECRET,
-            \Magento\Store\Model\ScopeInterface::SCOPE_STORE
-        );
-    }
-
-    public function getSuccessUrl()
-    {
-        return $this->scopeConfig->getValue(
-            self::STRIPE_SUCCESS_URL,
-            \Magento\Store\Model\ScopeInterface::SCOPE_STORE
-        );
-    }
-
-    public function getCancelUrl()
-    {
-        return $this->scopeConfig->getValue(
-            self::STRIPE_CANCEL_URL,
             \Magento\Store\Model\ScopeInterface::SCOPE_STORE
         );
     }

@@ -14,8 +14,12 @@ use Magento\Customer\Api\CustomerRepositoryInterface;
  * Stripe success callback controller
  * Route: GET /stripe/index/status?masked_number=<increment_id>&store_code=<code>
  *
- * Stripe redirects here after the customer completes payment.
- * We set the order to "processing" and create an invoice.
+ * Stripe redirects here after the customer completes payment on the Stripe
+ * Payment Link page (after_completion[redirect][url]).
+ *
+ * Redirect after processing:
+ *   <magento_base_url>/stripe/index/success/<increment_id>
+ *   -- You can add your own frontend redirect logic inside redirectToSuccess()
  *
  * Same structure as Square\Payments\Controller\Index\Status
  */
@@ -35,7 +39,6 @@ class Status extends Action
     protected $_transaction;
     protected $_eventManager;
     protected $orderSender;
-    protected $configDataProvider;
 
     public function __construct(
         Context $context,
@@ -52,8 +55,7 @@ class Status extends Action
         \Magento\Sales\Model\Service\InvoiceService $invoiceService,
         \Magento\Framework\DB\Transaction $transaction,
         \Magento\Framework\Event\ManagerInterface $eventManager,
-        OrderSender $orderSender,
-        \Tourwithalpha\StripePayment\Model\DataProvider\ConfigDataProvider $configDataProvider
+        OrderSender $orderSender
     ) {
         parent::__construct($context);
         $this->_pageFactory = $pageFactory;
@@ -70,7 +72,6 @@ class Status extends Action
         $this->_transaction = $transaction;
         $this->_eventManager = $eventManager;
         $this->orderSender = $orderSender;
-        $this->configDataProvider = $configDataProvider;
     }
 
     public function execute()
@@ -83,19 +84,16 @@ class Status extends Action
         $logger->addWriter($writer);
         $logger->info('Stripe Status callback: order = ' . $orderIncrementId);
 
-        $successUrl = $this->configDataProvider->getSuccessUrl();
-        $cancelUrl = $this->configDataProvider->getCancelUrl();
-        $pwaUrl = rtrim($successUrl ?: $this->storeManager->getStore()->getBaseUrl(), '/') . '/';
-
         $orderObj = $this->getOrderByIncrementId($orderIncrementId);
 
         if ($orderObj === null) {
             $logger->info('Stripe Status: order not found - ' . $orderIncrementId);
-            header('Location: ' . $pwaUrl . 'payment-failed');
+            $failUrl = $this->buildFailureUrl();
+            header('Location: ' . $failUrl);
             exit();
         }
 
-        // Only process if still in pending_payment
+        // Only process if still in pending_payment state
         if ($orderObj->getState() === Order::STATE_PENDING_PAYMENT) {
             $orderObj->setState(Order::STATE_PROCESSING, true);
             $orderObj->setStatus(Order::STATE_PROCESSING);
@@ -117,7 +115,7 @@ class Status extends Action
                         __('Notified customer about invoice #%1.', $invoice->getId())
                     )->setIsCustomerNotified(true)->save();
 
-                    // Send order confirmation email
+                    // Send order confirmation email now that payment is confirmed
                     try {
                         $orderObj->setCanSendNewEmailFlag(true);
                         $orderObj->setSendEmail(true);
@@ -132,20 +130,30 @@ class Status extends Action
             }
         }
 
-        $response = [
-            'order_number' => $orderObj->getIncrementId(),
-            'order_status' => 'processing',
-            'status' => 1,
-        ];
-
-        return $this->redirectToSuccess($response, $orderObj, $pwaUrl);
+        $this->redirectToSuccess($orderObj);
     }
 
-    protected function redirectToSuccess($response, $orderObj, $pwaUrl)
+    /**
+     * Build the frontend success URL programmatically.
+     * Pattern: <magento_base_url>/order-success/<increment_id>
+     *
+     * Modify this method to suit your frontend URL structure.
+     */
+    protected function redirectToSuccess($orderObj)
     {
-        $redirectUrl = rtrim($pwaUrl, '/') . '/order-success/' . $response['order_number'];
+        $baseUrl = $this->storeManager->getStore()->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_WEB);
+        $redirectUrl = rtrim($baseUrl, '/') . '/order-success/' . $orderObj->getIncrementId();
         header('Location: ' . $redirectUrl);
         exit();
+    }
+
+    /**
+     * Build the frontend failure URL programmatically.
+     */
+    protected function buildFailureUrl()
+    {
+        $baseUrl = $this->storeManager->getStore()->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_WEB);
+        return rtrim($baseUrl, '/') . '/payment-failed';
     }
 
     protected function getOrderByIncrementId($incrementId)

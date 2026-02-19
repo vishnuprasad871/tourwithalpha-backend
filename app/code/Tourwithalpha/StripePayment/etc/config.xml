@@ -11,6 +11,12 @@
                 <title>Stripe Payment Gateway</title>
                 <allowspecific>0</allowspecific>
                 <group>Online</group>
+                <!--
+                    success_url and cancel_url are NOT stored in config.
+                    They are built programmatically by code:
+                      success -> /stripe/index/status    (Controller/Index/Status.php)
+                      cancel  -> /stripe/index/cancel    (Controller/Index/Cancel.php)
+                -->
             </stripe>
         </payment>
     </default>
