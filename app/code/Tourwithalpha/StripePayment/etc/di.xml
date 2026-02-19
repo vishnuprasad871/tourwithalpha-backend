@@ -2,7 +2,7 @@
 
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
 
-    <type name="Magento\QuoteGraphQl\Model\Resolver\SetPaymentAndPlaceOrder">
+    <type name="Magento\QuoteGraphQl\Model\Resolver\PlaceOrder">
         <plugin name="stripe_payments_redirect_url"
                 type="Tourwithalpha\StripePayment\Plugin\PlaceOrderPlugin" disabled="false"/>
     </type>

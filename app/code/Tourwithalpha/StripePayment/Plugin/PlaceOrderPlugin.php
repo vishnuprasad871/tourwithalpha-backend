@@ -5,7 +5,7 @@ namespace Tourwithalpha\StripePayment\Plugin;
 
 use Magento\Framework\GraphQl\Config\Element\Field;
 use Magento\Framework\GraphQl\Schema\Type\ResolveInfo;
-use Magento\QuoteGraphQl\Model\Resolver\SetPaymentAndPlaceOrder;
+use Magento\QuoteGraphQl\Model\Resolver\PlaceOrder;
 use Tourwithalpha\StripePayment\Model\PaymentGateway\CreatePaymentLink;
 use Magento\Sales\Api\Data\OrderInterface;
 
@@ -37,7 +37,7 @@ class PlaceOrderPlugin
      * @inheritdoc
      */
     public function afterResolve(
-        SetPaymentAndPlaceOrder $subject,
+        PlaceOrder $subject,
         $result,
         Field $field,
         $context,
