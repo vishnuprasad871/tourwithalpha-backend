@@ -1,0 +1,17 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <payment>
+            <stripe>
+                <active>1</active>
+                <model>Tourwithalpha\StripePayment\Model\Payment\Stripe</model>
+                <order_status>pending_payment</order_status>
+                <payment_action>Capture</payment_action>
+                <title>Stripe Payment Gateway</title>
+                <allowspecific>0</allowspecific>
+                <group>Online</group>
+            </stripe>
+        </payment>
+    </default>
+</config>

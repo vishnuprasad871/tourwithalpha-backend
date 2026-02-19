@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+  <system>
+    <section id="payment">
+        <group id="stripe" translate="label" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1">
+          <label>Stripe Payment Gateway</label>
+            <field id="active" translate="label comment" sortOrder="10" type="select" showInDefault="1" showInWebsite="1" showInStore="0">
+                <label>Enable</label>
+                <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+            </field>
+            <field id="title" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Payment Title</label>
+            </field>
+            <field id="secret_key" translate="label" type="obscure" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Stripe Secret Key</label>
+                <comment>Your Stripe secret key (sk_live_... or sk_test_...)</comment>
+                <backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>
+            </field>
+            <field id="webhook_secret" translate="label" type="obscure" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Stripe Webhook Secret</label>
+                <comment>Signing secret from your Stripe Webhook endpoint (whsec_...)</comment>
+                <backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>
+            </field>
+            <field id="success_url" translate="label" type="text" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Success Redirect URL</label>
+                <comment>Frontend URL after successful payment (e.g. https://yoursite.com/order-success)</comment>
+            </field>
+            <field id="cancel_url" translate="label" type="text" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Cancel Redirect URL</label>
+                <comment>Frontend URL when payment is cancelled (e.g. https://yoursite.com/cart)</comment>
+            </field>
+        </group>
+    </section>
+  </system>
+</config>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="sales_order" resource="default" engine="innodb">
+        <column xsi:type="varchar" name="stripe_payment_link_id" length="255" nullable="true"
+                comment="Stripe Payment Link ID"/>
+    </table>
+</schema>
