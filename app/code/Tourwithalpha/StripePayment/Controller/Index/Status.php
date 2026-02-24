@@ -141,8 +141,8 @@ class Status extends Action
      */
     protected function redirectToSuccess($orderObj)
     {
-        $baseUrl = $this->storeManager->getStore()->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_WEB);
-        $redirectUrl = rtrim($baseUrl, '/') . '/order-success/' . $orderObj->getIncrementId();
+        $baseUrl = "https://www.tourwithalpha.com/";
+        $redirectUrl = $baseUrl . "booking/success?order=" . $orderObj->getIncrementId();
         header('Location: ' . $redirectUrl);
         exit();
     }

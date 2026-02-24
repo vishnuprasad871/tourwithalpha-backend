@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Tourwithalpha BookingCount Module
+ * Admin menu configuration
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <!-- Tourwithalpha top-level menu -->
+        <add id="Tourwithalpha_BookingCount::tourwithalpha"
+             title="Tourwithalpha"
+             module="Tourwithalpha_BookingCount"
+             sortOrder="100"
+             resource="Tourwithalpha_BookingCount::offline_sales"/>
+
+        <!-- Offline Sales submenu -->
+        <add id="Tourwithalpha_BookingCount::offline_sales"
+             title="Offline Sales"
+             module="Tourwithalpha_BookingCount"
+             sortOrder="10"
+             parent="Tourwithalpha_BookingCount::tourwithalpha"
+             action="tourwithalpha/offlinesales/index"
+             resource="Tourwithalpha_BookingCount::offline_sales"/>
+    </menu>
+</config>

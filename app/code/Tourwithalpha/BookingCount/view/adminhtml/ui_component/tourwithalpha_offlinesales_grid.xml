@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * Tourwithalpha BookingCount Module
+ * UI Component Grid for Offline Sales
+ */
+-->
+<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">tourwithalpha_offlinesales_grid.tourwithalpha_offlinesales_grid_data_source</item>
+        </item>
+    </argument>
+
+    <settings>
+        <buttons>
+            <button name="add">
+                <url path="*/*/new"/>
+                <class>primary</class>
+                <label translate="true">Add New Offline Booking</label>
+            </button>
+        </buttons>
+        <spinner>tourwithalpha_offlinesales_grid_columns</spinner>
+        <deps>
+            <dep>tourwithalpha_offlinesales_grid.tourwithalpha_offlinesales_grid_data_source</dep>
+        </deps>
+    </settings>
+
+    <!-- Data Source -->
+    <dataSource name="tourwithalpha_offlinesales_grid_data_source" component="Magento_Ui/js/grid/provider">
+        <settings>
+            <storageConfig>
+                <param name="indexField" xsi:type="string">id</param>
+            </storageConfig>
+            <updateUrl path="mui/index/render"/>
+        </settings>
+        <aclResource>Tourwithalpha_BookingCount::offline_sales</aclResource>
+        <dataProvider class="Tourwithalpha\BookingCount\Model\OfflineSalesDataProvider"
+                      name="tourwithalpha_offlinesales_grid_data_source">
+            <settings>
+                <requestFieldName>id</requestFieldName>
+                <primaryFieldName>id</primaryFieldName>
+            </settings>
+        </dataProvider>
+    </dataSource>
+
+    <!-- Columns -->
+    <listingToolbar name="listing_top">
+        <settings>
+            <sticky>true</sticky>
+        </settings>
+        <bookmark name="bookmarks"/>
+        <columnsControls name="columns_controls"/>
+        <filters name="listing_filters">
+            <filterSelect name="sku" provider="${ $.parentName }">
+                <settings>
+                    <captionValue>0</captionValue>
+                    <options class="Tourwithalpha\BookingCount\Model\Source\BookingProducts"/>
+                    <label translate="true">Product</label>
+                    <dataScope>sku</dataScope>
+                    <imports>
+                        <link name="options">index = tourwithalpha_offlinesales_grid.tourwithalpha_offlinesales_grid.tourwithalpha_offlinesales_grid_columns.sku:options</link>
+                    </imports>
+                </settings>
+            </filterSelect>
+            <filterDate name="booking_date" provider="${ $.parentName }">
+                <settings>
+                    <label translate="true">Booking Date</label>
+                    <dataScope>booking_date</dataScope>
+                </settings>
+            </filterDate>
+        </filters>
+        <paging name="listing_paging"/>
+    </listingToolbar>
+
+    <columns name="tourwithalpha_offlinesales_grid_columns">
+        <settings>
+            <editorConfig>
+                <param name="clientConfig" xsi:type="array">
+                    <item name="saveUrl" xsi:type="url" path="tourwithalpha/offlinesales/save"/>
+                    <item name="validateBeforeSave" xsi:type="boolean">false</item>
+                </param>
+                <param name="indexField" xsi:type="string">id</param>
+                <param name="enabled" xsi:type="boolean">true</param>
+                <param name="selectProvider" xsi:type="string">tourwithalpha_offlinesales_grid.tourwithalpha_offlinesales_grid.tourwithalpha_offlinesales_grid_columns.ids</param>
+            </editorConfig>
+            <childDefaults>
+                <param name="fieldAction" xsi:type="array">
+                    <item name="provider" xsi:type="string">tourwithalpha_offlinesales_grid.tourwithalpha_offlinesales_grid.tourwithalpha_offlinesales_grid_columns_editor</item>
+                    <item name="target" xsi:type="string">startEdit</item>
+                    <item name="params" xsi:type="array">
+                        <item name="0" xsi:type="string">${ $.$data.rowIndex }</item>
+                        <item name="1" xsi:type="boolean">true</item>
+                    </item>
+                </param>
+            </childDefaults>
+        </settings>
+
+        <selectionsColumn name="ids">
+            <settings>
+                <indexField>id</indexField>
+            </settings>
+        </selectionsColumn>
+
+        <column name="id">
+            <settings>
+                <filter>textRange</filter>
+                <label translate="true">ID</label>
+                <sorting>asc</sorting>
+            </settings>
+        </column>
+
+        <column name="sku" component="Magento_Ui/js/grid/columns/select">
+            <settings>
+                <options class="Tourwithalpha\BookingCount\Model\Source\BookingProducts"/>
+                <filter>select</filter>
+                <dataType>select</dataType>
+                <label translate="true">Product</label>
+            </settings>
+        </column>
+
+        <column name="booking_date" class="Magento\Ui\Component\Listing\Columns\Date"
+                component="Magento_Ui/js/grid/columns/date">
+            <settings>
+                <filter>dateRange</filter>
+                <dataType>date</dataType>
+                <label translate="true">Booking Date</label>
+            </settings>
+        </column>
+
+        <column name="qty">
+            <settings>
+                <filter>textRange</filter>
+                <label translate="true">Offline Qty</label>
+            </settings>
+        </column>
+
+        <column name="notes">
+            <settings>
+                <label translate="true">Notes</label>
+            </settings>
+        </column>
+
+        <column name="created_at" class="Magento\Ui\Component\Listing\Columns\Date"
+                component="Magento_Ui/js/grid/columns/date">
+            <settings>
+                <filter>dateRange</filter>
+                <dataType>date</dataType>
+                <label translate="true">Created At</label>
+            </settings>
+        </column>
+
+        <actionsColumn name="actions" class="Tourwithalpha\BookingCount\Ui\Component\Listing\Column\OfflineSalesActions">
+            <settings>
+                <indexField>id</indexField>
+                <resizeDefaultWidth>107</resizeDefaultWidth>
+                <resizeEnabled>false</resizeEnabled>
+            </settings>
+        </actionsColumn>
+    </columns>
+</listing>

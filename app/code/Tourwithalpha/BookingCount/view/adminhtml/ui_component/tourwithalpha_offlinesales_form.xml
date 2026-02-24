@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * Tourwithalpha BookingCount Module
+ * UI Component Form for Offline Sales
+ */
+-->
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">tourwithalpha_offlinesales_form.tourwithalpha_offlinesales_form_data_source</item>
+        </item>
+        <item name="label" xsi:type="string" translate="true">Offline Booking Information</item>
+        <item name="reverseMetadataMerge" xsi:type="boolean">true</item>
+    </argument>
+
+    <settings>
+        <buttons>
+            <button name="back">
+                <url path="*/*/index"/>
+                <class>back</class>
+                <label translate="true">Back</label>
+            </button>
+            <button name="reset">
+                <class>reset</class>
+                <label translate="true">Reset</label>
+            </button>
+            <button name="save">
+                <class>save primary</class>
+                <label translate="true">Save</label>
+                <url path="*/*/save"/>
+            </button>
+        </buttons>
+        <namespace>tourwithalpha_offlinesales_form</namespace>
+        <dataScope>data</dataScope>
+        <deps>
+            <dep>tourwithalpha_offlinesales_form.tourwithalpha_offlinesales_form_data_source</dep>
+        </deps>
+    </settings>
+
+    <!-- Data Source -->
+    <dataSource name="tourwithalpha_offlinesales_form_data_source">
+        <argument name="data" xsi:type="array">
+            <item name="js_config" xsi:type="array">
+                <item name="component" xsi:type="string">Magento_Ui/js/form/provider</item>
+            </item>
+        </argument>
+        <settings>
+            <submitUrl path="tourwithalpha/offlinesales/save"/>
+        </settings>
+        <aclResource>Tourwithalpha_BookingCount::offline_sales</aclResource>
+        <dataProvider class="Tourwithalpha\BookingCount\Model\OfflineSalesDataProvider"
+                      name="tourwithalpha_offlinesales_form_data_source">
+            <settings>
+                <requestFieldName>id</requestFieldName>
+                <primaryFieldName>id</primaryFieldName>
+            </settings>
+        </dataProvider>
+    </dataSource>
+
+    <!-- Form Layout -->
+    <fieldset name="general">
+        <settings>
+            <label translate="true">Offline Booking Details</label>
+        </settings>
+
+        <!-- Hidden ID field for edits -->
+        <field name="id" formElement="input">
+            <settings>
+                <dataType>text</dataType>
+                <visible>false</visible>
+            </settings>
+        </field>
+
+        <!-- Product dropdown -->
+        <field name="sku" sortOrder="10" formElement="select">
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Product</label>
+                <dataScope>sku</dataScope>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+            </settings>
+            <formElements>
+                <select>
+                    <settings>
+                        <options class="Tourwithalpha\BookingCount\Model\Source\BookingProducts"/>
+                    </settings>
+                </select>
+            </formElements>
+        </field>
+
+        <!-- Booking Date -->
+        <field name="booking_date" sortOrder="20" formElement="date">
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Booking Date</label>
+                <dataScope>booking_date</dataScope>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+            </settings>
+            <formElements>
+                <date>
+                    <settings>
+                        <options>
+                            <option name="dateFormat" xsi:type="string">MM/dd/yyyy</option>
+                        </options>
+                    </settings>
+                </date>
+            </formElements>
+        </field>
+
+        <!-- Offline Quantity -->
+        <field name="qty" sortOrder="30" formElement="input">
+            <settings>
+                <dataType>number</dataType>
+                <label translate="true">Offline Qty (seats sold)</label>
+                <dataScope>qty</dataScope>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                    <rule name="validate-greater-than-zero" xsi:type="boolean">true</rule>
+                    <rule name="validate-digits" xsi:type="boolean">true</rule>
+                </validation>
+            </settings>
+        </field>
+
+        <!-- Notes -->
+        <field name="notes" sortOrder="40" formElement="textarea">
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Notes (optional)</label>
+                <dataScope>notes</dataScope>
+            </settings>
+        </field>
+    </fieldset>
+</form>

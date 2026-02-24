@@ -110,6 +110,19 @@ class BookingCountProvider
             $totalBookings++;
         }
 
+        // Merge offline (manual/phone) sales into the totals
+        $offlineCounts = $this->getOfflineSalesCountsBySku($sku);
+        foreach ($offlineCounts as $date => $offlineQty) {
+            if (!isset($bookingsByDate[$date])) {
+                $bookingsByDate[$date] = [
+                    'date' => $date,
+                    'count' => 0,
+                    'qty_total' => 0
+                ];
+            }
+            $bookingsByDate[$date]['qty_total'] += $offlineQty;
+        }
+
         // Sort by date ascending
         ksort($bookingsByDate);
 
@@ -130,6 +143,37 @@ class BookingCountProvider
             'success' => true,
             'message' => sprintf('Found %d booking dates for SKU: %s', count($bookingsByDate), $sku)
         ];
+    }
+
+    /**
+     * Fetch offline sales quantities grouped by date for a given SKU
+     *
+     * @param string $sku
+     * @return array<string, int> Date => total offline qty
+     */
+    private function getOfflineSalesCountsBySku(string $sku): array
+    {
+        $connection = $this->resourceConnection->getConnection();
+        $tableName = $this->resourceConnection->getTableName('tourwithalpha_offline_bookings');
+
+        // Check table exists to avoid fatal errors before setup:upgrade
+        if (!$connection->isTableExists($tableName)) {
+            return [];
+        }
+
+        $select = $connection->select()
+            ->from($tableName, ['booking_date', 'qty_sum' => new \Zend_Db_Expr('SUM(qty)')])
+            ->where('sku = ?', $sku)
+            ->group('booking_date');
+
+        $rows = $connection->fetchAll($select);
+        $result = [];
+
+        foreach ($rows as $row) {
+            $result[$row['booking_date']] = (int) $row['qty_sum'];
+        }
+
+        return $result;
     }
 
     /**
