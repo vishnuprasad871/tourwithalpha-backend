@@ -78,6 +78,7 @@ class ImageListProvider
             'success' => false,
             'message' => ''
         ];
+        $path = "wysiwyg/gallery/" . ltrim($path, '/');
 
         try {
             // Clean the path
