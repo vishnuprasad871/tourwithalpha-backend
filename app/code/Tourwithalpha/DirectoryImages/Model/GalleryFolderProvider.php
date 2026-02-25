@@ -118,7 +118,7 @@ class GalleryFolderProvider
 
                 $folders[] = [
                     'name' => $displayName,
-                    'folder_path' => $entry,
+                    'folder_path' => str_replace("wysiwyg/gallery/", "", $entry),
                     'main_image_url' => $mediaUrl . $mainImage,
                     'image_count' => $imageCount
                 ];
