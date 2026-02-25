@@ -4,6 +4,8 @@ type Query {
     directoryImages(
         path: String! @doc(description: "Relative path to the directory (from pub/media)")
     ): DirectoryImagesOutput @resolver(class: "Tourwithalpha\\DirectoryImages\\Model\\Resolver\\DirectoryImages") @doc(description: "Get list of images from a specified directory")
+
+    galleryFolders: GalleryFoldersOutput @resolver(class: "Tourwithalpha\\DirectoryImages\\Model\\Resolver\\GalleryFolders") @doc(description: "List all folders inside wysiwyg/gallery that contain images, each with a representative main image")
 }
 
 type DirectoryImagesOutput @doc(description: "Output containing list of images") {
@@ -21,4 +23,18 @@ type ImageInfo @doc(description: "Information about an individual image") {
     size: Int @doc(description: "File size in bytes")
     extension: String @doc(description: "File extension")
     modified_at: String @doc(description: "Last modified timestamp")
+}
+
+type GalleryFoldersOutput @doc(description: "Output containing the list of gallery folders") {
+    folders: [GalleryFolderInfo] @doc(description: "List of gallery folders that contain at least one image")
+    total_count: Int @doc(description: "Total number of folders returned")
+    success: Boolean @doc(description: "Whether the operation was successful")
+    message: String @doc(description: "Response message")
+}
+
+type GalleryFolderInfo @doc(description: "Information about a single gallery folder") {
+    name: String @doc(description: "Display name of the folder (first letter uppercase, rest lowercase)")
+    folder_path: String @doc(description: "Relative media path to the folder")
+    main_image_url: String @doc(description: "Full URL of the main image (file containing 'main' in its name, or first image as fallback)")
+    image_count: Int @doc(description: "Total number of images inside the folder")
 }
