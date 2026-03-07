@@ -54,7 +54,7 @@ class OfflineSalesDataProvider extends AbstractDataProvider
      * @param Filter $filter
      * @return void
      */
-    public function addFilter(Filter $filter): void
+    public function addFilter($filter): void
     {
         $field = $filter->getField();
         $condType = $filter->getConditionType() ?: 'eq';
@@ -75,7 +75,7 @@ class OfflineSalesDataProvider extends AbstractDataProvider
      * @param string $direction  ASC|DESC
      * @return void
      */
-    public function addOrder(string $field, string $direction): void
+    public function addOrder($field, $direction): void
     {
         $this->collection->setOrder($field, strtoupper($direction));
     }
@@ -87,7 +87,7 @@ class OfflineSalesDataProvider extends AbstractDataProvider
      * @param int $size    Rows per page
      * @return void
      */
-    public function setLimit(int $offset, int $size): void
+    public function setLimit($offset, $size): void
     {
         if ($size > 0) {
             $this->collection->setPageSize($size);
