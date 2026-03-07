@@ -111,8 +111,6 @@ class OfflineSalesDataProvider extends AbstractDataProvider
      * Retrieve data in the format the grid expects:
      *   ['items' => [...], 'totalRecords' => N]
      *
-     * Collection::toArray() already returns exactly this structure.
-     *
      * @return array
      */
     public function getData(): array
@@ -121,8 +119,15 @@ class OfflineSalesDataProvider extends AbstractDataProvider
             return $this->loadedData;
         }
 
-        // toArray() returns ['totalRecords' => N, 'items' => [...]] natively
-        $this->loadedData = $this->collection->toArray();
+        $items = [];
+        foreach ($this->collection->getItems() as $item) {
+            $items[] = $item->toArray(['id', 'sku', 'booking_date', 'qty', 'notes', 'created_at']);
+        }
+
+        $this->loadedData = [
+            'items' => $items,
+            'totalRecords' => (int) $this->collection->getSize(),
+        ];
 
         return $this->loadedData;
     }

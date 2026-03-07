@@ -46,7 +46,7 @@
         </dataProvider>
     </dataSource>
 
-    <!-- Columns -->
+    <!-- Listing Toolbar with Filters -->
     <listingToolbar name="listing_top">
         <settings>
             <sticky>true</sticky>
@@ -60,9 +60,6 @@
                     <options class="Tourwithalpha\BookingCount\Model\Source\BookingProducts"/>
                     <label translate="true">Product</label>
                     <dataScope>sku</dataScope>
-                    <imports>
-                        <link name="options">index = tourwithalpha_offlinesales_grid.tourwithalpha_offlinesales_grid.tourwithalpha_offlinesales_grid_columns.sku:options</link>
-                    </imports>
                 </settings>
             </filterSelect>
             <filterDate name="booking_date" provider="${ $.parentName }">
@@ -75,17 +72,9 @@
         <paging name="listing_paging"/>
     </listingToolbar>
 
+    <!-- Grid Columns -->
     <columns name="tourwithalpha_offlinesales_grid_columns">
         <settings>
-            <editorConfig>
-                <param name="clientConfig" xsi:type="array">
-                    <item name="saveUrl" xsi:type="url" path="tourwithalpha/offlinesales/save"/>
-                    <item name="validateBeforeSave" xsi:type="boolean">false</item>
-                </param>
-                <param name="indexField" xsi:type="string">id</param>
-                <param name="enabled" xsi:type="boolean">true</param>
-                <param name="selectProvider" xsi:type="string">tourwithalpha_offlinesales_grid.tourwithalpha_offlinesales_grid.tourwithalpha_offlinesales_grid_columns.ids</param>
-            </editorConfig>
             <childDefaults>
                 <param name="fieldAction" xsi:type="array">
                     <item name="provider" xsi:type="string">tourwithalpha_offlinesales_grid.tourwithalpha_offlinesales_grid.tourwithalpha_offlinesales_grid_columns_editor</item>
@@ -98,12 +87,14 @@
             </childDefaults>
         </settings>
 
+        <!-- Selection Column -->
         <selectionsColumn name="ids">
             <settings>
                 <indexField>id</indexField>
             </settings>
         </selectionsColumn>
 
+        <!-- ID Column -->
         <column name="id">
             <settings>
                 <filter>textRange</filter>
@@ -112,6 +103,7 @@
             </settings>
         </column>
 
+        <!-- Product SKU Column -->
         <column name="sku" component="Magento_Ui/js/grid/columns/select">
             <settings>
                 <options class="Tourwithalpha\BookingCount\Model\Source\BookingProducts"/>
@@ -121,8 +113,8 @@
             </settings>
         </column>
 
-        <column name="booking_date" class="Magento\Ui\Component\Listing\Columns\Date"
-                component="Magento_Ui/js/grid/columns/date">
+        <!-- Booking Date Column -->
+        <column name="booking_date" class="Magento\Ui\Component\Listing\Columns\Date" component="Magento_Ui/js/grid/columns/date">
             <settings>
                 <filter>dateRange</filter>
                 <dataType>date</dataType>
@@ -130,21 +122,23 @@
             </settings>
         </column>
 
+        <!-- Quantity Column -->
         <column name="qty">
             <settings>
                 <filter>textRange</filter>
-                <label translate="true">Offline Qty</label>
+                <label translate="true">Qty (Seats)</label>
             </settings>
         </column>
 
+        <!-- Notes Column -->
         <column name="notes">
             <settings>
                 <label translate="true">Notes</label>
             </settings>
         </column>
 
-        <column name="created_at" class="Magento\Ui\Component\Listing\Columns\Date"
-                component="Magento_Ui/js/grid/columns/date">
+        <!-- Created At Column -->
+        <column name="created_at" class="Magento\Ui\Component\Listing\Columns\Date" component="Magento_Ui/js/grid/columns/date">
             <settings>
                 <filter>dateRange</filter>
                 <dataType>date</dataType>
@@ -152,6 +146,7 @@
             </settings>
         </column>
 
+        <!-- Actions Column -->
         <actionsColumn name="actions" class="Tourwithalpha\BookingCount\Ui\Component\Listing\Column\OfflineSalesActions">
             <settings>
                 <indexField>id</indexField>
