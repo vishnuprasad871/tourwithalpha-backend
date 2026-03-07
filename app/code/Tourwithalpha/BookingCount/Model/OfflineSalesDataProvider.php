@@ -13,18 +13,18 @@ use Magento\Ui\DataProvider\AbstractDataProvider;
 use Tourwithalpha\BookingCount\Model\ResourceModel\OfflineSales\CollectionFactory;
 
 /**
- * Data provider for the offline sales UI component grid and form.
+ * Data provider for the offline sales UI component grid.
  *
- * AbstractDataProvider is the correct base for *both* grids and forms in Magento 2.
- * For grids the framework calls addFilter / addOrder / setLimit on the provider before
- * calling getData(), so we must delegate those calls to the underlying collection.
+ * Extends AbstractDataProvider and delegates filter / sort / pagination
+ * calls directly to the underlying Magento DB collection so the grid
+ * AJAX render endpoint (mui/index/render) can page and filter correctly.
  */
 class OfflineSalesDataProvider extends AbstractDataProvider
 {
     /**
-     * @var array
+     * @var array|null
      */
-    private array $loadedData = [];
+    private ?array $loadedData = null;
 
     /**
      * @param string            $name
@@ -49,7 +49,7 @@ class OfflineSalesDataProvider extends AbstractDataProvider
     /**
      * Add field filter to collection.
      *
-     * Called by the grid framework for each active filter.
+     * The grid framework calls this for every active toolbar or column filter.
      *
      * @param Filter $filter
      * @return void
@@ -60,7 +60,7 @@ class OfflineSalesDataProvider extends AbstractDataProvider
         $condType = $filter->getConditionType() ?: 'eq';
         $value = $filter->getValue();
 
-        // Date-range filters arrive as ['from' => ..., 'to' => ...] arrays
+        // Date-range and textRange filters arrive as arrays ('from'/'to' keys)
         if (is_array($value)) {
             $this->collection->addFieldToFilter($field, $value);
         } else {
@@ -72,47 +72,57 @@ class OfflineSalesDataProvider extends AbstractDataProvider
      * Add sorting to collection.
      *
      * @param string $field
-     * @param string $direction
+     * @param string $direction  ASC|DESC
      * @return void
      */
     public function addOrder(string $field, string $direction): void
     {
-        $this->collection->addOrder($field, strtoupper($direction));
+        $this->collection->setOrder($field, strtoupper($direction));
     }
 
     /**
-     * Set pagination on collection.
+     * Set pagination offset and page size on the collection.
      *
-     * @param int $offset
-     * @param int $size
+     * @param int $offset  First-row offset (0-based)
+     * @param int $size    Rows per page
      * @return void
      */
     public function setLimit(int $offset, int $size): void
     {
-        $this->collection->setPageSize($size);
-        $this->collection->setCurPage(ceil($offset / $size) + 1);
+        if ($size > 0) {
+            $this->collection->setPageSize($size);
+            $this->collection->setCurPage(floor($offset / $size) + 1);
+        }
     }
 
     /**
-     * Retrieve data for the grid in the expected format.
+     * Return row count for the current (un-paginated) collection.
      *
-     * @return array{items: array, totalRecords: int}
+     * Called by the grid to fill the "totalRecords" field.
+     *
+     * @return int
+     */
+    public function count(): int
+    {
+        return (int) $this->collection->getSize();
+    }
+
+    /**
+     * Retrieve data in the format the grid expects:
+     *   ['items' => [...], 'totalRecords' => N]
+     *
+     * Collection::toArray() already returns exactly this structure.
+     *
+     * @return array
      */
     public function getData(): array
     {
-        if (!empty($this->loadedData)) {
+        if ($this->loadedData !== null) {
             return $this->loadedData;
         }
 
-        $items = [];
-        foreach ($this->collection->getItems() as $model) {
-            $items[] = $model->getData();
-        }
-
-        $this->loadedData = [
-            'items' => $items,
-            'totalRecords' => (int) $this->collection->getSize(),
-        ];
+        // toArray() returns ['totalRecords' => N, 'items' => [...]] natively
+        $this->loadedData = $this->collection->toArray();
 
         return $this->loadedData;
     }
