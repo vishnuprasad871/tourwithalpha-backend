@@ -42,7 +42,7 @@ class OfflineSalesDataProvider extends AbstractDataProvider
     }
 
     /**
-     * Retrieve data
+     * Retrieve data for grid
      *
      * @return array
      */
@@ -52,9 +52,15 @@ class OfflineSalesDataProvider extends AbstractDataProvider
             return $this->loadedData;
         }
 
+        $items = [];
         foreach ($this->collection->getItems() as $model) {
-            $this->loadedData[$model->getId()] = $model->getData();
+            $items[] = $model->getData();
         }
+
+        $this->loadedData = [
+            'items' => $items,
+            'totalRecords' => $this->collection->getSize(),
+        ];
 
         return $this->loadedData;
     }
