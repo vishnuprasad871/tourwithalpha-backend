@@ -60,7 +60,7 @@
         </dataProvider>
     </dataSource>
 
-    <!-- Form Layout -->
+    <!-- Fieldset -->
     <fieldset name="general">
         <settings>
             <label translate="true">Offline Booking Details</label>
