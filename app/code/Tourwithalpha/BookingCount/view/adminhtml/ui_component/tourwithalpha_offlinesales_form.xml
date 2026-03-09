@@ -51,7 +51,7 @@
             <submitUrl path="tourwithalpha/offlinesales/save"/>
         </settings>
         <aclResource>Tourwithalpha_BookingCount::offline_sales</aclResource>
-        <dataProvider class="Tourwithalpha\BookingCount\Model\OfflineSalesDataProvider"
+        <dataProvider class="Tourwithalpha\BookingCount\Model\OfflineSalesFormDataProvider"
                       name="tourwithalpha_offlinesales_form_data_source">
             <settings>
                 <requestFieldName>id</requestFieldName>
