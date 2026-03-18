@@ -8,7 +8,16 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
     
-    <!-- No preferences needed - concrete classes are used directly -->
+    <!-- Repository Interface Preferences -->
+    <preference for="Tourwithalpha\BookingCount\Api\OfflineSalesRepositoryInterface" 
+                type="Tourwithalpha\BookingCount\Model\OfflineSalesRepository"/>
+    
+    <!-- Data Interface Preferences -->
+    <preference for="Tourwithalpha\BookingCount\Api\Data\OfflineSalesInterface" 
+                type="Tourwithalpha\BookingCount\Model\OfflineSales"/>
+    
+    <preference for="Tourwithalpha\BookingCount\Api\Data\OfflineSalesSearchResultsInterface" 
+                type="Tourwithalpha\BookingCount\Model\OfflineSalesSearchResults"/>
     
 </config>
 

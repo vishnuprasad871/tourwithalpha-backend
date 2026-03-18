@@ -9,6 +9,7 @@ declare(strict_types=1);
 namespace Tourwithalpha\BookingCount\Model;
 
 use Magento\Framework\Model\AbstractModel;
+use Tourwithalpha\BookingCount\Api\Data\OfflineSalesInterface;
 use Tourwithalpha\BookingCount\Model\ResourceModel\OfflineSales as OfflineSalesResource;
 
 /**
@@ -23,7 +24,7 @@ use Tourwithalpha\BookingCount\Model\ResourceModel\OfflineSales as OfflineSalesR
  * @method string getNotes()
  * @method $this  setNotes(string $notes)
  */
-class OfflineSales extends AbstractModel
+class OfflineSales extends AbstractModel implements OfflineSalesInterface
 {
     /**
      * Initialize resource model

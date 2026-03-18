@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Tourwithalpha BookingCount Module
+ * WebAPI Configuration for Offline Sales REST Endpoints
+ */
+-->
+<routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Webapi:etc/webapi.xsd">
+
+    <!-- GET: List all offline bookings -->
+    <route url="/V1/tourwithalpha/bookings" method="GET">
+        <service class="Tourwithalpha\BookingCount\Api\OfflineSalesRepositoryInterface" method="getList"/>
+        <resources>
+            <resource ref="Tourwithalpha_BookingCount::offline_sales"/>
+        </resources>
+    </route>
+
+    <!-- GET: Get specific booking by ID -->
+    <route url="/V1/tourwithalpha/bookings/:id" method="GET">
+        <service class="Tourwithalpha\BookingCount\Api\OfflineSalesRepositoryInterface" method="getById"/>
+        <resources>
+            <resource ref="Tourwithalpha_BookingCount::offline_sales"/>
+        </resources>
+    </route>
+
+    <!-- POST: Create new booking -->
+    <route url="/V1/tourwithalpha/bookings" method="POST">
+        <service class="Tourwithalpha\BookingCount\Api\OfflineSalesRepositoryInterface" method="save"/>
+        <resources>
+            <resource ref="Tourwithalpha_BookingCount::offline_sales"/>
+        </resources>
+    </route>
+
+    <!-- PUT: Update booking -->
+    <route url="/V1/tourwithalpha/bookings/:id" method="PUT">
+        <service class="Tourwithalpha\BookingCount\Api\OfflineSalesRepositoryInterface" method="save"/>
+        <resources>
+            <resource ref="Tourwithalpha_BookingCount::offline_sales"/>
+        </resources>
+    </route>
+
+    <!-- DELETE: Delete booking -->
+    <route url="/V1/tourwithalpha/bookings/:id" method="DELETE">
+        <service class="Tourwithalpha\BookingCount\Api\OfflineSalesRepositoryInterface" method="deleteById"/>
+        <resources>
+            <resource ref="Tourwithalpha_BookingCount::offline_sales"/>
+        </resources>
+    </route>
+</routes>
