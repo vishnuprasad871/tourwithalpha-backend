@@ -35,4 +35,151 @@ class OfflineSales extends AbstractModel implements OfflineSalesInterface
     {
         $this->_init(OfflineSalesResource::class);
     }
+
+    /**
+     * Get ID
+     *
+     * @return int|null
+     */
+    public function getId()
+    {
+        return $this->getData('id');
+    }
+
+    /**
+     * Set ID
+     *
+     * @param int $id
+     * @return $this
+     */
+    public function setId($id)
+    {
+        return $this->setData('id', $id);
+    }
+
+    /**
+     * Get SKU
+     *
+     * @return string
+     */
+    public function getSku()
+    {
+        return $this->getData('sku');
+    }
+
+    /**
+     * Set SKU
+     *
+     * @param string $sku
+     * @return $this
+     */
+    public function setSku($sku)
+    {
+        return $this->setData('sku', $sku);
+    }
+
+    /**
+     * Get Booking Date
+     *
+     * @return string
+     */
+    public function getBookingDate()
+    {
+        return $this->getData('booking_date');
+    }
+
+    /**
+     * Set Booking Date
+     *
+     * @param string $bookingDate
+     * @return $this
+     */
+    public function setBookingDate($bookingDate)
+    {
+        return $this->setData('booking_date', $bookingDate);
+    }
+
+    /**
+     * Get Quantity
+     *
+     * @return int
+     */
+    public function getQty()
+    {
+        return $this->getData('qty');
+    }
+
+    /**
+     * Set Quantity
+     *
+     * @param int $qty
+     * @return $this
+     */
+    public function setQty($qty)
+    {
+        return $this->setData('qty', $qty);
+    }
+
+    /**
+     * Get Notes
+     *
+     * @return string|null
+     */
+    public function getNotes()
+    {
+        return $this->getData('notes');
+    }
+
+    /**
+     * Set Notes
+     *
+     * @param string $notes
+     * @return $this
+     */
+    public function setNotes($notes)
+    {
+        return $this->setData('notes', $notes);
+    }
+
+    /**
+     * Get Created At
+     *
+     * @return string|null
+     */
+    public function getCreatedAt()
+    {
+        return $this->getData('created_at');
+    }
+
+    /**
+     * Set Created At
+     *
+     * @param string $createdAt
+     * @return $this
+     */
+    public function setCreatedAt($createdAt)
+    {
+        return $this->setData('created_at', $createdAt);
+    }
+
+    /**
+     * Get Updated At
+     *
+     * @return string|null
+     */
+    public function getUpdatedAt()
+    {
+        return $this->getData('updated_at');
+    }
+
+    /**
+     * Set Updated At
+     *
+     * @param string $updatedAt
+     * @return $this
+     */
+    public function setUpdatedAt($updatedAt)
+    {
+        return $this->setData('updated_at', $updatedAt);
+    }
 }
