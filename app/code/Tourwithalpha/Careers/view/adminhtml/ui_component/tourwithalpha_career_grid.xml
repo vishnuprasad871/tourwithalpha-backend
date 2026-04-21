@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">tourwithalpha_career_grid.tourwithalpha_career_grid_data_source</item>
+        </item>
+    </argument>
+
+    <settings>
+        <buttons>
+            <button name="add">
+                <url path="*/*/new"/>
+                <class>primary</class>
+                <label translate="true">Add New Career Listing</label>
+            </button>
+        </buttons>
+        <spinner>tourwithalpha_career_grid_columns</spinner>
+        <deps>
+            <dep>tourwithalpha_career_grid.tourwithalpha_career_grid_data_source</dep>
+        </deps>
+    </settings>
+
+    <!-- Data Source -->
+    <dataSource name="tourwithalpha_career_grid_data_source" component="Magento_Ui/js/grid/provider">
+        <settings>
+            <storageConfig>
+                <param name="indexField" xsi:type="string">id</param>
+            </storageConfig>
+            <updateUrl path="mui/index/render"/>
+        </settings>
+        <aclResource>Tourwithalpha_Careers::careers</aclResource>
+        <dataProvider class="Tourwithalpha\Careers\Model\CareerDataProvider"
+                      name="tourwithalpha_career_grid_data_source">
+            <settings>
+                <requestFieldName>id</requestFieldName>
+                <primaryFieldName>id</primaryFieldName>
+            </settings>
+        </dataProvider>
+    </dataSource>
+
+    <!-- Listing Toolbar -->
+    <listingToolbar name="listing_top">
+        <settings>
+            <sticky>true</sticky>
+        </settings>
+        <bookmark name="bookmarks"/>
+        <columnsControls name="columns_controls"/>
+        <filters name="listing_filters">
+            <filterInput name="title" provider="${ $.parentName }">
+                <settings>
+                    <label translate="true">Job Title</label>
+                    <dataScope>title</dataScope>
+                </settings>
+            </filterInput>
+            <filterSelect name="department" provider="${ $.parentName }">
+                <settings>
+                    <captionValue>0</captionValue>
+                    <options class="Tourwithalpha\Careers\Model\Source\Department"/>
+                    <label translate="true">Department</label>
+                    <dataScope>department</dataScope>
+                </settings>
+            </filterSelect>
+            <filterSelect name="employment_type" provider="${ $.parentName }">
+                <settings>
+                    <captionValue>0</captionValue>
+                    <options class="Tourwithalpha\Careers\Model\Source\EmploymentType"/>
+                    <label translate="true">Employment Type</label>
+                    <dataScope>employment_type</dataScope>
+                </settings>
+            </filterSelect>
+            <filterSelect name="is_active" provider="${ $.parentName }">
+                <settings>
+                    <captionValue>0</captionValue>
+                    <options class="Tourwithalpha\Careers\Model\Source\IsActive"/>
+                    <label translate="true">Status</label>
+                    <dataScope>is_active</dataScope>
+                </settings>
+            </filterSelect>
+        </filters>
+        <paging name="listing_paging"/>
+    </listingToolbar>
+
+    <!-- Grid Columns -->
+    <columns name="tourwithalpha_career_grid_columns">
+
+        <selectionsColumn name="ids">
+            <settings>
+                <indexField>id</indexField>
+            </settings>
+        </selectionsColumn>
+
+        <column name="id">
+            <settings>
+                <filter>textRange</filter>
+                <label translate="true">ID</label>
+                <sorting>desc</sorting>
+            </settings>
+        </column>
+
+        <column name="title">
+            <settings>
+                <filter>text</filter>
+                <label translate="true">Job Title</label>
+            </settings>
+        </column>
+
+        <column name="department" component="Magento_Ui/js/grid/columns/select">
+            <settings>
+                <options class="Tourwithalpha\Careers\Model\Source\Department"/>
+                <filter>select</filter>
+                <dataType>select</dataType>
+                <label translate="true">Department</label>
+            </settings>
+        </column>
+
+        <column name="location">
+            <settings>
+                <filter>text</filter>
+                <label translate="true">Location</label>
+            </settings>
+        </column>
+
+        <column name="employment_type" component="Magento_Ui/js/grid/columns/select">
+            <settings>
+                <options class="Tourwithalpha\Careers\Model\Source\EmploymentType"/>
+                <filter>select</filter>
+                <dataType>select</dataType>
+                <label translate="true">Employment Type</label>
+            </settings>
+        </column>
+
+        <column name="salary_range">
+            <settings>
+                <label translate="true">Salary Range</label>
+            </settings>
+        </column>
+
+        <column name="is_active" component="Magento_Ui/js/grid/columns/select">
+            <settings>
+                <options class="Tourwithalpha\Careers\Model\Source\IsActive"/>
+                <filter>select</filter>
+                <dataType>select</dataType>
+                <label translate="true">Status</label>
+            </settings>
+        </column>
+
+        <column name="resume_path">
+            <settings>
+                <label translate="true">Resume</label>
+            </settings>
+        </column>
+
+        <column name="created_at" class="Magento\Ui\Component\Listing\Columns\Date" component="Magento_Ui/js/grid/columns/date">
+            <settings>
+                <filter>dateRange</filter>
+                <dataType>date</dataType>
+                <label translate="true">Created At</label>
+            </settings>
+        </column>
+
+        <actionsColumn name="actions" class="Tourwithalpha\Careers\Ui\Component\Listing\Column\CareerActions">
+            <settings>
+                <indexField>id</indexField>
+                <resizeDefaultWidth>107</resizeDefaultWidth>
+                <resizeEnabled>false</resizeEnabled>
+            </settings>
+        </actionsColumn>
+
+    </columns>
+</listing>

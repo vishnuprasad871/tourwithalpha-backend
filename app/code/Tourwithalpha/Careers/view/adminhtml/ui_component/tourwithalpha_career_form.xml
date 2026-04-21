@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">tourwithalpha_career_form.tourwithalpha_career_form_data_source</item>
+        </item>
+        <item name="label" xsi:type="string" translate="true">Career Listing Information</item>
+        <item name="reverseMetadataMerge" xsi:type="boolean">true</item>
+    </argument>
+
+    <settings>
+        <buttons>
+            <button name="back">
+                <url path="*/*/index"/>
+                <class>back</class>
+                <label translate="true">Back</label>
+            </button>
+            <button name="reset">
+                <class>reset</class>
+                <label translate="true">Reset</label>
+            </button>
+            <button name="save">
+                <class>save primary</class>
+                <label translate="true">Save Career</label>
+                <url path="*/*/save"/>
+            </button>
+        </buttons>
+        <namespace>tourwithalpha_career_form</namespace>
+        <dataScope>data</dataScope>
+        <deps>
+            <dep>tourwithalpha_career_form.tourwithalpha_career_form_data_source</dep>
+        </deps>
+    </settings>
+
+    <!-- Data Source -->
+    <dataSource name="tourwithalpha_career_form_data_source">
+        <argument name="data" xsi:type="array">
+            <item name="js_config" xsi:type="array">
+                <item name="component" xsi:type="string">Magento_Ui/js/form/provider</item>
+            </item>
+        </argument>
+        <settings>
+            <submitUrl path="tourwithalpha_careers/career/save"/>
+        </settings>
+        <aclResource>Tourwithalpha_Careers::careers</aclResource>
+        <dataProvider class="Tourwithalpha\Careers\Model\CareerFormDataProvider"
+                      name="tourwithalpha_career_form_data_source">
+            <settings>
+                <requestFieldName>id</requestFieldName>
+                <primaryFieldName>id</primaryFieldName>
+            </settings>
+        </dataProvider>
+    </dataSource>
+
+    <!-- General Fieldset -->
+    <fieldset name="general">
+        <settings>
+            <label translate="true">Career Listing Details</label>
+        </settings>
+
+        <!-- Hidden ID field -->
+        <field name="id" formElement="input">
+            <settings>
+                <dataType>text</dataType>
+                <visible>false</visible>
+            </settings>
+        </field>
+
+        <!-- Job Title -->
+        <field name="title" sortOrder="10" formElement="input">
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Job Title</label>
+                <dataScope>title</dataScope>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                    <rule name="max_text_length" xsi:type="number">255</rule>
+                </validation>
+            </settings>
+        </field>
+
+        <!-- Department -->
+        <field name="department" sortOrder="20" formElement="select">
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Department</label>
+                <dataScope>department</dataScope>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+            </settings>
+            <formElements>
+                <select>
+                    <settings>
+                        <options class="Tourwithalpha\Careers\Model\Source\Department"/>
+                    </settings>
+                </select>
+            </formElements>
+        </field>
+
+        <!-- Location -->
+        <field name="location" sortOrder="30" formElement="input">
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Location</label>
+                <dataScope>location</dataScope>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                    <rule name="max_text_length" xsi:type="number">255</rule>
+                </validation>
+            </settings>
+        </field>
+
+        <!-- Employment Type -->
+        <field name="employment_type" sortOrder="40" formElement="select">
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Employment Type</label>
+                <dataScope>employment_type</dataScope>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+            </settings>
+            <formElements>
+                <select>
+                    <settings>
+                        <options class="Tourwithalpha\Careers\Model\Source\EmploymentType"/>
+                    </settings>
+                </select>
+            </formElements>
+        </field>
+
+        <!-- Salary Range (optional) -->
+        <field name="salary_range" sortOrder="50" formElement="input">
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Salary Range (optional)</label>
+                <dataScope>salary_range</dataScope>
+                <tooltip>
+                    <description translate="true">e.g. $50,000 – $70,000 / year</description>
+                </tooltip>
+            </settings>
+        </field>
+
+        <!-- Status -->
+        <field name="is_active" sortOrder="60" formElement="select">
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Status</label>
+                <dataScope>is_active</dataScope>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+            </settings>
+            <formElements>
+                <select>
+                    <settings>
+                        <options class="Tourwithalpha\Careers\Model\Source\IsActive"/>
+                    </settings>
+                </select>
+            </formElements>
+        </field>
+
+    </fieldset>
+
+    <!-- Description Fieldset -->
+    <fieldset name="content">
+        <settings>
+            <label translate="true">Job Content</label>
+        </settings>
+
+        <!-- Job Description -->
+        <field name="description" sortOrder="10" formElement="textarea">
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Job Description</label>
+                <dataScope>description</dataScope>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+            </settings>
+        </field>
+
+        <!-- Requirements -->
+        <field name="requirements" sortOrder="20" formElement="textarea">
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Requirements &amp; Qualifications</label>
+                <dataScope>requirements</dataScope>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+            </settings>
+        </field>
+
+    </fieldset>
+
+</form>

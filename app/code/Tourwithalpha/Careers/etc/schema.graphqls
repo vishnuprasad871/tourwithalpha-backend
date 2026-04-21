@@ -1,0 +1,57 @@
+type Query {
+    listCareers(
+        pageSize: Int = 20 @doc(description: "Number of results per page")
+        currentPage: Int = 1 @doc(description: "Page number")
+    ): CareerListOutput @resolver(class: "Tourwithalpha\\Careers\\Model\\Resolver\\ListCareers") @doc(description: "Retrieve active career listings")
+
+    getCareer(
+        id: Int! @doc(description: "Career listing ID")
+    ): CareerOutput @resolver(class: "Tourwithalpha\\Careers\\Model\\Resolver\\GetCareer") @doc(description: "Retrieve a single career listing by ID")
+}
+
+type Mutation {
+    submitJobApplication(
+        input: JobApplicationInput! @doc(description: "Job application form data")
+    ): JobApplicationOutput @resolver(class: "Tourwithalpha\\Careers\\Model\\Resolver\\SubmitJobApplication") @doc(description: "Submit a job application and notify admin via email")
+}
+
+input JobApplicationInput @doc(description: "Input fields for a job application") {
+    career_id: Int! @doc(description: "ID of the career listing being applied for")
+    first_name: String! @doc(description: "Applicant first name")
+    last_name: String! @doc(description: "Applicant last name")
+    email: String! @doc(description: "Applicant email address")
+    phone: String @doc(description: "Applicant phone number")
+    cover_letter: String @doc(description: "Applicant cover letter text")
+    resume_base64: String @doc(description: "Base64-encoded resume file content (PDF, DOC, DOCX)")
+    resume_filename: String @doc(description: "Original filename of the resume (e.g. john_doe_cv.pdf)")
+}
+
+type CareerListOutput @doc(description: "List of active career postings") {
+    careers: [Career] @doc(description: "Array of career listing items")
+    total_count: Int @doc(description: "Total number of active careers")
+    success: Boolean @doc(description: "Whether the query was successful")
+}
+
+type CareerOutput @doc(description: "Single career posting") {
+    career: Career @doc(description: "Career listing detail")
+    success: Boolean @doc(description: "Whether the query was successful")
+    message: String @doc(description: "Response message")
+}
+
+type Career @doc(description: "A career job posting") {
+    id: Int @doc(description: "Career listing ID")
+    title: String @doc(description: "Job title")
+    department: String @doc(description: "Department name")
+    location: String @doc(description: "Job location")
+    employment_type: String @doc(description: "Employment type (Full-time, Part-time, etc.)")
+    description: String @doc(description: "Full job description")
+    requirements: String @doc(description: "Job requirements and qualifications")
+    salary_range: String @doc(description: "Salary range (optional)")
+    created_at: String @doc(description: "Listing creation date")
+}
+
+type JobApplicationOutput @doc(description: "Result of a job application submission") {
+    success: Boolean @doc(description: "Whether the application was submitted successfully")
+    message: String @doc(description: "Response message")
+    application_id: Int @doc(description: "ID of the saved application record")
+}
