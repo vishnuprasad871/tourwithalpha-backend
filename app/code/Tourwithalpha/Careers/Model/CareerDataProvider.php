@@ -8,11 +8,10 @@ declare(strict_types=1);
 
 namespace Tourwithalpha\Careers\Model;
 
-use Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider;
-use Tourwithalpha\Careers\Model\ResourceModel\Career\Collection;
+use Magento\Ui\DataProvider\AbstractDataProvider;
 use Tourwithalpha\Careers\Model\ResourceModel\Career\CollectionFactory;
 
-class CareerDataProvider extends DataProvider
+class CareerDataProvider extends AbstractDataProvider
 {
     /**
      * @param string $name
@@ -30,7 +29,7 @@ class CareerDataProvider extends DataProvider
         array $meta = [],
         array $data = []
     ) {
-        parent::__construct($name, $primaryFieldName, $requestFieldName, $meta, $data);
         $this->collection = $collectionFactory->create();
+        parent::__construct($name, $primaryFieldName, $requestFieldName, $meta, $data);
     }
 }
