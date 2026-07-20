@@ -113,10 +113,12 @@ curl -X GET "https://yoursite.com/rest/V1/tourwithalpha/bookings/1" \
 **Request Body:**
 ```json
 {
-  "sku": "TOUR-BASIC",
-  "booking_date": "2026-07-16",
-  "qty": 50,
-  "notes": "Sold out"
+  "booking": {
+    "sku": "TOUR-BASIC",
+    "booking_date": "2026-07-16",
+    "qty": 50,
+    "notes": "Sold out"
+  }
 }
 ```
 
@@ -126,10 +128,12 @@ curl -X POST "https://yoursite.com/rest/V1/tourwithalpha/bookings" \
   -H "Authorization: Bearer {token}" \
   -H "Content-Type: application/json" \
   -d '{
-    "sku": "TOUR-BASIC",
-    "booking_date": "2026-07-16",
-    "qty": 50,
-    "notes": "Sold out"
+    "booking": {
+      "sku": "TOUR-BASIC",
+      "booking_date": "2026-07-16",
+      "qty": 50,
+      "notes": "Sold out"
+    }
   }'
 ```
 
@@ -172,11 +176,13 @@ curl -X POST "https://yoursite.com/rest/V1/tourwithalpha/bookings" \
 **Request Body:**
 ```json
 {
-  "id": 1,
-  "sku": "TOUR-BASIC",
-  "booking_date": "2026-05-11",
-  "qty": 2,
-  "notes": "2 seats available"
+  "booking": {
+    "id": 1,
+    "sku": "TOUR-BASIC",
+    "booking_date": "2026-05-11",
+    "qty": 2,
+    "notes": "2 seats available"
+  }
 }
 ```
 
@@ -186,11 +192,13 @@ curl -X PUT "https://yoursite.com/rest/V1/tourwithalpha/bookings/1" \
   -H "Authorization: Bearer {token}" \
   -H "Content-Type: application/json" \
   -d '{
-    "id": 1,
-    "sku": "TOUR-BASIC",
-    "booking_date": "2026-05-11",
-    "qty": 2,
-    "notes": "2 seats available"
+    "booking": {
+      "id": 1,
+      "sku": "TOUR-BASIC",
+      "booking_date": "2026-05-11",
+      "qty": 2,
+      "notes": "2 seats available"
+    }
   }'
 ```
 
@@ -247,10 +255,12 @@ curl -X POST "https://tourwithalpha.shop/rest/V1/tourwithalpha/bookings" \
   -H "Authorization: Bearer {token}" \
   -H "Content-Type: application/json" \
   -d '{
-    "sku": "TOUR-BASIC",
-    "booking_date": "2026-07-16",
-    "qty": 50,
-    "notes": "Sold out"
+    "booking": {
+      "sku": "TOUR-BASIC",
+      "booking_date": "2026-07-16",
+      "qty": 50,
+      "notes": "Sold out"
+    }
   }'
 ```
 
@@ -261,10 +271,12 @@ curl -X POST "https://yoursite.com/rest/V1/tourwithalpha/bookings" \
   -H "Authorization: Bearer {token}" \
   -H "Content-Type: application/json" \
   -d '{
-    "sku": "TOUR-BASIC",
-    "booking_date": "2026-05-11",
-    "qty": 2,
-    "notes": "2 seats available"
+    "booking": {
+      "sku": "TOUR-BASIC",
+      "booking_date": "2026-05-11",
+      "qty": 2,
+      "notes": "2 seats available"
+    }
   }'
 ```
 
@@ -283,11 +295,13 @@ curl -X PUT "https://yoursite.com/rest/V1/tourwithalpha/bookings/1" \
   -H "Authorization: Bearer {token}" \
   -H "Content-Type: application/json" \
   -d '{
-    "id": 1,
-    "sku": "TOUR-BASIC",
-    "booking_date": "2026-07-16",
-    "qty": 45,
-    "notes": "Updated - 45 seats sold"
+    "booking": {
+      "id": 1,
+      "sku": "TOUR-BASIC",
+      "booking_date": "2026-07-16",
+      "qty": 45,
+      "notes": "Updated - 45 seats sold"
+    }
   }'
 ```
 
