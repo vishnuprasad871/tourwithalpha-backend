@@ -16,8 +16,15 @@
     <preference for="Tourwithalpha\BookingCount\Api\Data\OfflineSalesInterface" 
                 type="Tourwithalpha\BookingCount\Model\OfflineSales"/>
     
-    <preference for="Tourwithalpha\BookingCount\Api\Data\OfflineSalesSearchResultsInterface" 
+    <preference for="Tourwithalpha\BookingCount\Api\Data\OfflineSalesSearchResultsInterface"
                 type="Tourwithalpha\BookingCount\Model\OfflineSalesSearchResults"/>
-    
+
+    <!-- Enforce the booking cutoff on add-to-cart (storefront + GraphQL) -->
+    <type name="Magento\Quote\Model\Quote">
+        <plugin name="tourwithalpha_validate_booking_cutoff"
+                type="Tourwithalpha\BookingCount\Plugin\ValidateBookingCutoff"
+                sortOrder="10"/>
+    </type>
+
 </config>
 

@@ -143,7 +143,9 @@ class BookingCountProvider
             'total_bookings' => $totalBookings,
             'success' => true,
             'message' => sprintf('Found %d booking dates for SKU: %s', count($bookingsByDate), $sku),
-            'default_allowed_qty' => $allowedQty
+            'default_allowed_qty' => $allowedQty,
+            'timezone' => $this->timezone->getConfigTimezone(),
+            'cutoff_hours' => $this->configProvider->getCutoffHours()
         ];
     }
 

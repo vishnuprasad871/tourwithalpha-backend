@@ -19,6 +19,13 @@ class ConfigProvider
 {
     private const XML_PATH_SKU_LIMITS = 'tourwithalpha_booking/limits/sku_limits';
 
+    private const XML_PATH_CUTOFF_HOURS = 'tourwithalpha_booking/limits/cutoff_hours';
+
+    /**
+     * Default booking cutoff (hours before tour start) when not configured
+     */
+    public const DEFAULT_CUTOFF_HOURS = 12;
+
     /**
      * @var ScopeConfigInterface
      */
@@ -120,6 +127,27 @@ class ConfigProvider
         }
 
         return null;
+    }
+
+    /**
+     * Get the booking cutoff in hours (booking closes this many hours before tour start)
+     *
+     * @param int|null $storeId
+     * @return int
+     */
+    public function getCutoffHours(?int $storeId = null): int
+    {
+        $value = $this->scopeConfig->getValue(
+            self::XML_PATH_CUTOFF_HOURS,
+            ScopeInterface::SCOPE_STORE,
+            $storeId
+        );
+
+        if ($value === null || $value === '' || (int) $value <= 0) {
+            return self::DEFAULT_CUTOFF_HOURS;
+        }
+
+        return (int) $value;
     }
 
     /**

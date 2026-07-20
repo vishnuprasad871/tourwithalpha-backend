@@ -11,6 +11,7 @@
         <tourwithalpha_booking>
             <limits>
                 <sku_limits></sku_limits>
+                <cutoff_hours>12</cutoff_hours>
             </limits>
         </tourwithalpha_booking>
     </default>

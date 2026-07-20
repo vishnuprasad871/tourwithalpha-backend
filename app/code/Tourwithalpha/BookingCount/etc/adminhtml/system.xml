@@ -24,6 +24,11 @@
                     <frontend_model>Tourwithalpha\BookingCount\Block\Adminhtml\Form\Field\SkuLimits</frontend_model>
                     <backend_model>Magento\Config\Model\Config\Backend\Serialized\ArraySerialized</backend_model>
                 </field>
+                <field id="cutoff_hours" translate="label comment" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Booking Cutoff (Hours)</label>
+                    <comment>Booking closes this many hours before the tour start (start of the tour day, in the store timezone). Default: 12.</comment>
+                    <validate>validate-digits validate-greater-than-zero</validate>
+                </field>
             </group>
         </section>
     </system>
